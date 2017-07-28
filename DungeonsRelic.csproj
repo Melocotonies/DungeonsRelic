@@ -84,13 +84,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\EnemiesManager.cs" />
-    <Compile Include="Assets\_Scripts\Enemy.cs" />
+    <Compile Include="Assets\_Scripts\Enemies\EnemiesManager.cs" />
+    <Compile Include="Assets\_Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\_Scripts\GameManager.cs" />
     <Compile Include="Assets\_Scripts\Traps\Spikes.cs" />
     <Compile Include="Assets\_Scripts\Traps\TrapFloorTile.cs" />
+    <Compile Include="Assets\_Scripts\Traps\TrapsManager.cs" />
     <Compile Include="Assets\_Scripts\Traps\Turret.cs" />
-    <Compile Include="Assets\_Scripts\TrapsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

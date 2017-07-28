@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    private float maxHealth = 3;
+    public float currentHealth { private get; set; }
+    public bool isDead { get; private set; }
+
     private bool isAttacking;
 
     private NavMeshAgent _agent;
@@ -17,6 +21,8 @@ public class Enemy : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _enemiesManager = GetComponentInParent<EnemiesManager>();
+
+        currentHealth = maxHealth;
     }
 
     private void Update()
@@ -32,5 +38,18 @@ public class Enemy : MonoBehaviour
             isAttacking = true;
             _animator.SetBool("Attack", true);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        if (currentHealth <= 0 && !isDead) Die();
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        Destroy(this.gameObject);
     }
 }

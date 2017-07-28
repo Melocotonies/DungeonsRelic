@@ -23,6 +23,14 @@ public class GameManager : MonoBehaviour
         currentState = State.BUILDING;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            currentState = State.READY;
+        }
+    }
+
     public static void NextWave()
     {
         currentWave++;

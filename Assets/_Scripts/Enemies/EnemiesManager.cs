@@ -16,7 +16,7 @@ public class EnemiesManager : MonoBehaviour
 
     private void Awake()
     {
-        enemiesPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemies");
+        enemiesPrefabs = Resources.LoadAll<GameObject>("Enemies");
         enemiesKilledInWave = 0;
     }
 
@@ -54,14 +54,6 @@ public class EnemiesManager : MonoBehaviour
                 GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
                 break;
         }
-
-
-
-        //Debug.Log("Wave: " + GameManager.currentWave);
-        //Debug.Log("numOfEnemiesInWave: " + GameManager.numOfEnemiesInWave);
-        //Debug.Log("numOfEnemiesInDoor: " + GameManager.numOfEnemiesInDoor);
-        //Debug.Log("Money: " + GameManager.currentMoney);
-
 
         Vector3 enemyPosition = Vector3.zero;
         Enemy[] enemies = transform.GetComponentsInChildren<Enemy>();
