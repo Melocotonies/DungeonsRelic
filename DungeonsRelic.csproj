@@ -86,11 +86,17 @@
   <ItemGroup>
     <Compile Include="Assets\_Scripts\Enemies\EnemiesManager.cs" />
     <Compile Include="Assets\_Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\_Scripts\Enemies\EnemyHealthBar.cs" />
     <Compile Include="Assets\_Scripts\GameManager.cs" />
-    <Compile Include="Assets\_Scripts\Traps\Spikes.cs" />
+    <Compile Include="Assets\_Scripts\Relic\Relic.cs" />
+    <Compile Include="Assets\_Scripts\Relic\RelicHealthBar.cs" />
+    <Compile Include="Assets\_Scripts\Traps\Spikes\Spikes.cs" />
     <Compile Include="Assets\_Scripts\Traps\TrapFloorTile.cs" />
     <Compile Include="Assets\_Scripts\Traps\TrapsManager.cs" />
-    <Compile Include="Assets\_Scripts\Traps\Turret.cs" />
+    <Compile Include="Assets\_Scripts\Traps\Turret\Turret.cs" />
+    <Compile Include="Assets\_Scripts\Traps\Turret\TurretProjectile.cs" />
+    <Compile Include="Assets\_Scripts\Traps\Turret\TurretTop.cs" />
+    <Compile Include="Assets\_Scripts\UI\BillBoard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

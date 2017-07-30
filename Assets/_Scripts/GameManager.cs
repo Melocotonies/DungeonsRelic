@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (currentState == State.BUILDING && Input.GetKeyDown(KeyCode.R))
         {
-            currentState = State.READY;
+            NextWave();
         }
     }
 
@@ -37,5 +37,9 @@ public class GameManager : MonoBehaviour
         numOfEnemiesInWave += currentWave;
         currentMoney += (currentWave * 10);
         currentState = State.READY;
+
+        Debug.Log("Money: " + currentMoney);
+        Debug.Log("Wave: " + currentWave);
+        Debug.Log("Enemies in wave: " + numOfEnemiesInWave);
     }
 }

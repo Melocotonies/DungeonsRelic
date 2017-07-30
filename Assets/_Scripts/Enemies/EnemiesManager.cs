@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
 {
-    public GameObject relic;
+    public Relic relic { get; private set; }
 
     [SerializeField] private GameObject[] doors;
     private List<GameObject> availableDoors = new List<GameObject>();
-    private bool[] isDoorFull;
-    private int[] currentEnemiesInDoor;
+    private int[] currentEnemiesInDoor = new int[3];
 
     private GameObject[] enemiesPrefabs;
-    public int enemiesKilledInWave { private get; set; }
 
     private void Awake()
     {
+        relic = FindObjectOfType<Relic>();
         enemiesPrefabs = Resources.LoadAll<GameObject>("Enemies");
-        enemiesKilledInWave = 0;
     }
 
     private void Update()
@@ -26,11 +24,13 @@ public class EnemiesManager : MonoBehaviour
         {
             GameManager.currentState = GameManager.State.FIGHTING;
             SetEnemies();
+            Debug.Log("Enemies coming! " + availableDoors.Count);
         }
 
-        if(GameManager.currentState == GameManager.State.FIGHTING && enemiesKilledInWave == GameManager.numOfEnemiesInWave)
+        if(GameManager.currentState == GameManager.State.FIGHTING && transform.childCount == 0)
         {
             GameManager.currentState = GameManager.State.BUILDING;
+            Debug.Log("Building time!");
         }
     }
 
@@ -38,58 +38,61 @@ public class EnemiesManager : MonoBehaviour
     {
         switch (GameManager.currentWave)
         {
-            case 0:
+            case 1:
                 availableDoors.Add(doors[0]);
+                Debug.Log("Door 1");
                 break;
-            case 5:
+            case 3:
                 availableDoors.Add(doors[1]);
                 GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 2;
+                Debug.Log("Door 1 & 2");
+                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
                 break;
-            case 10:
+            case 7:
                 availableDoors.Add(doors[2]);
                 GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 3;
+                Debug.Log("Door 1 & 2 & 3");
+                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
                 break;
-            case 15:
+            case 12:
                 availableDoors.Add(doors[3]);
                 GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
+                Debug.Log("Door 1 & 2 & 3 & 4");
+                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
                 break;
         }
 
         Vector3 enemyPosition = Vector3.zero;
-        Enemy[] enemies = transform.GetComponentsInChildren<Enemy>();
-        for (int i = 0; i < GameManager.numOfEnemiesInWave - enemies.Length; i++)
+        for (int i = 0; i < GameManager.numOfEnemiesInWave; i++)
         {
             GameObject newEnemy = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
-            if(i < 5)
+            if(GameManager.currentWave < 3)
             {
                 enemyPosition = availableDoors[0].transform.position;
             }
-            else if(i < 10)
+            else if(GameManager.currentWave < 7)
             {
-                if (!isDoorFull[0])
+                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[0].transform.position;
                     currentEnemiesInDoor[0]++;
-                    if (currentEnemiesInDoor[0] == GameManager.numOfEnemiesInDoor) isDoorFull[0] = true;
                 }
                 else
                 {
                     enemyPosition = availableDoors[1].transform.position;
                 }
             }
-            else if(i < 15)
+            else if(GameManager.currentWave < 12)
             {
-                if (!isDoorFull[0])
+                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[0].transform.position;
                     currentEnemiesInDoor[0]++;
-                    if (currentEnemiesInDoor[0] == GameManager.numOfEnemiesInDoor) isDoorFull[0] = true;
                 }
-                else if (!isDoorFull[1])
+                else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[1].transform.position;
                     currentEnemiesInDoor[1]++;
-                    if (currentEnemiesInDoor[1] == GameManager.numOfEnemiesInDoor) isDoorFull[1] = true;
                 }
                 else
                 {
@@ -98,23 +101,20 @@ public class EnemiesManager : MonoBehaviour
             }
             else
             {
-                if (!isDoorFull[0])
+                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[0].transform.position;
                     currentEnemiesInDoor[0]++;
-                    if (currentEnemiesInDoor[0] == GameManager.numOfEnemiesInDoor) isDoorFull[0] = true;
                 }
-                else if (!isDoorFull[1])
+                else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[1].transform.position;
                     currentEnemiesInDoor[1]++;
-                    if (currentEnemiesInDoor[1] == GameManager.numOfEnemiesInDoor) isDoorFull[1] = true;
                 }
-                else if (!isDoorFull[2])
+                else if (currentEnemiesInDoor[2] < GameManager.numOfEnemiesInDoor)
                 {
                     enemyPosition = availableDoors[2].transform.position;
                     currentEnemiesInDoor[2]++;
-                    if (currentEnemiesInDoor[2] == GameManager.numOfEnemiesInDoor) isDoorFull[2] = true;
                 }
                 else
                 {

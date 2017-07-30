@@ -46,7 +46,7 @@ public class TrapsManager : MonoBehaviour
                 }
 
                 Vector3 trapPosition = _trapFloorTile.transform.position;
-                trapPosition.y += trapToInstantiate.GetComponent<Renderer>().bounds.size.y * .5f;
+                trapPosition.y += trapToInstantiate.GetComponentInChildren<Renderer>().bounds.size.y * .5f;
                 GameObject newTrap = Instantiate(trapToInstantiate, trapPosition, Quaternion.identity);
                 newTrap.transform.parent = transform;
                 _trapFloorTile.isTrapPlaced = true;

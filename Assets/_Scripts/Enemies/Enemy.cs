@@ -1,15 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    private float maxHealth = 3;
-    public float currentHealth { private get; set; }
+    [SerializeField] private float damage;
+
+    public float maxHealth { get; private set; }
+    public float currentHealth { get; private set; }
     public bool isDead { get; private set; }
 
     private bool isAttacking;
+    private float attackRate = 1f;
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         _enemiesManager = GetComponentInParent<EnemiesManager>();
 
+        maxHealth = 3;
         currentHealth = maxHealth;
     }
 
@@ -37,7 +39,19 @@ public class Enemy : MonoBehaviour
         {
             isAttacking = true;
             _animator.SetBool("Attack", true);
+            InvokeRepeating("Attack", 0f, attackRate);
         }
+        //else
+        //{
+        //    isAttacking = false;
+        //    _animator.SetBool("Attack", true);
+        //    CancelInvoke();
+        //}
+    }
+
+    public void Attack()
+    {
+        _enemiesManager.relic.TakeDamage(damage);
     }
 
     public void TakeDamage(float damage)
