@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
             actionPanel.SetActive(false);
             messagePanel.SetActive(false);
             _trapsManager.isTrapHighlighted = false;
+            isMoneyIncreased = false;
         }
 
         if (currentState == State.LOST)
