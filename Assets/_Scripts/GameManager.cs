@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     private bool isMoneyIncreased;
 
+    private TrapsManager _trapsManager;
+
     public static Relic relic;
 
     public enum TrapsType { SPIKES = 5, TURRET = 10 }
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         relic = FindObjectOfType<Relic>();
+        _trapsManager = FindObjectOfType<TrapsManager>();
 
         currentWave = 0;
         numOfEnemiesInWave = 3;
@@ -80,6 +83,7 @@ public class GameManager : MonoBehaviour
             wavePanel.SetActive(true);
             actionPanel.SetActive(false);
             messagePanel.SetActive(false);
+            _trapsManager.isTrapHighlighted = false;
         }
 
         if (currentState == State.LOST)
@@ -119,8 +123,9 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        Vector3 mPos = Input.mousePosition;
-        GUI.DrawTexture(new Rect(mPos.x - 32, Screen.height - mPos.y - 32, 16, 16), cursorTexture);
+        Vector3 mousePosition = Input.mousePosition;
+        Rect cursorPosition = new Rect(mousePosition.x - 32f, Screen.height - mousePosition.y - 32f, 16f, 16f);
+        GUI.DrawTexture(cursorPosition, cursorTexture);
     }
 
     public static void NextWave()

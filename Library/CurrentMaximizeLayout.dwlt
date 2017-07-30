@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 717, y: 492}
   m_MaxSize: {x: 22012, y: 14042}
   vertical: 0
-  controlID: 30285
+  controlID: 33201
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_MinSize: {x: 206, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 30286
+  controlID: 33202
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_MinSize: {x: 206, y: 121}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 30287
+  controlID: 33227
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 30169
+  controlID: 33170
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -508,8 +508,8 @@ MonoBehaviour:
     height: 328
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 9a2d0000
-    m_LastClickedID: 11674
+    m_SelectedIDs: bc060000
+    m_LastClickedID: 0
     m_ExpandedIDs: 08a2f8ffd4a9f8ffeabaf8ff1004faff0277fbff9608fcffa46bfdff1afcffff00000000e42900007c2a0000802a0000c82a0000242b0000282b0000042d0000182d0000942d00001a2e0000b02e0000d42e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -596,18 +596,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Textures
+    - Assets/_Scripts
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Textures
+  - Assets/_Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Melanie\Documents\Game Jams\GameDevNetwork (Cherry Jam)\DungeonsRelic
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 156}
-    m_SelectedIDs: ba260000
-    m_LastClickedID: 9914
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: ba270000
+    m_LastClickedID: 10170
     m_ExpandedIDs: 0000000072260000962600009e260000fe260000062700001a2700006827000082270000ba27000038280000522800005428000092280000c02f0000c22f000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -661,9 +661,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 9a2d0000
-    m_LastClickedInstanceID: 11674
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: bc060000
+    m_LastClickedInstanceID: 1724
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 5eb0ffffe82c00000c25000096adffff4a2ffaff3e2900004c260000f6270000502c0000ee2f000016250000802900005e29000034250000c6260000ee3d00000e84feff2810feffa63c0000763300001e49000032600000b6d00000c029000062bf010050bf01004abf01001eedffff142d0000b06801004add00006e330000e0db0300d6230000ec230000bc2f0500f02c00007c3a00009e3a00006a3a0000d83a0000e03a0000cc3a00009a3a000048b900005a530000ae15010050390000e0a801004eba0000c22a0000ce2a00003e2f00004e2400005a240000442400004e2b0000962600001229000016280000342a0000b8240000466f00002c2c0000b8320000422400004a2b0000462400004c2b00002a2b0000bacad0ffd8270000682b00002afc04004642bcffb42f0000922b0000aa270000962a0000ae2b00008c2a00001a6500008c2c000098b5d6ff9a2c0000c87ff5ff602c0000ba240000c6230000f65100009a250000aa250000a8250000c6250000f628fcfff02900008e290000f8290000002e00001a290000082600005abc00003abc000078be0000382b0000f22d0000de280100802600008c31000090330000a02900001cb8020024d00200102a000002310000663100001a2f00001c260000e00101003e28000082020100a83100007a2f04007c02010070330000e82700001c2a0000ec891100c23000000a3400003a550000e02d0000563300006c2e0000243300004e2c00001c340000c62700001c28000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

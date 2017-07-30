@@ -12,7 +12,7 @@ public class TrapsManager : MonoBehaviour
     private TrapFloorTile lastTrapFloorTile;
     private int trapPrice;
 
-    private bool isTrapHighlighted;
+    public bool isTrapHighlighted { private get; set; }
 
     Transform _camera;
     private RaycastHit hit;
@@ -52,24 +52,25 @@ public class TrapsManager : MonoBehaviour
                 ChangeEmissiveColor(lastTrapFloorTile, Color.black);
                 isTrapHighlighted = false;
             }
+
+            switch (currentTrapFloorTile.type)
+            {
+                case TypeOfTrap.SPIKES:
+                    trapToInstantiate = spikesTrapPrefab;
+                    trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.SPIKES);
+                    break;
+                case TypeOfTrap.TURRET:
+                    trapToInstantiate = turretTrapPrefab;
+                    trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.TURRET);
+                    break;
+            }
+
             ChangeEmissiveColor(currentTrapFloorTile, emissiveColor);
             isTrapHighlighted = true;
 
             //Place trap
             if (Input.GetMouseButtonDown(0))
             {
-                switch (currentTrapFloorTile.type)
-                {
-                    case TypeOfTrap.SPIKES:
-                        trapToInstantiate = spikesTrapPrefab;
-                        trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.SPIKES);
-                        break;
-                    case TypeOfTrap.TURRET:
-                        trapToInstantiate = turretTrapPrefab;
-                        trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.TURRET);
-                        break;
-                }
-
                 if (GameManager.currentMoney >= trapPrice)
                 {
                     GameManager.currentMoney -= trapPrice;
@@ -88,6 +89,7 @@ public class TrapsManager : MonoBehaviour
             ChangeEmissiveColor(lastTrapFloorTile, Color.black);
             isTrapHighlighted = false;
         }
+
     }
 
     private void ChangeEmissiveColor(TrapFloorTile trapFloorTile, Color32 color)
@@ -105,7 +107,12 @@ public class TrapsManager : MonoBehaviour
     {
         if (isTrapHighlighted)
         {
-
+            Vector3 mousePosition = Input.mousePosition;
+            Rect textPosition = new Rect(mousePosition.x - 100f, Screen.height - mousePosition.y - 64f, 128f, 32f);
+            GUIStyle textStyle = new GUIStyle();
+            textStyle.normal.textColor = Color.white;
+            textStyle.fontSize = 18;
+            GUI.Label(textPosition, "Build trap (" + trapPrice + " coins)", textStyle);
         }
     }
 
