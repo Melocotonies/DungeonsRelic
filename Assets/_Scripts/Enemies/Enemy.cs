@@ -5,12 +5,21 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float damage;
 
-    public float maxHealth { get; private set; }
+    [SerializeField] private float maxHealth;
+    public float _maxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+    }
     public float currentHealth { get; private set; }
     public bool isDead { get; private set; }
 
     private bool isAttacking;
     private float attackRate = 1f;
+
+    public bool isOnSpikesTrap { get; set; }
 
     private NavMeshAgent _agent;
     private Animator _animator;
@@ -22,9 +31,8 @@ public class Enemy : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _enemiesManager = GetComponentInParent<EnemiesManager>();
-
-        maxHealth = 3;
-        currentHealth = maxHealth;
+        
+        currentHealth = _maxHealth;
     }
 
     private void Update()
@@ -41,12 +49,6 @@ public class Enemy : MonoBehaviour
             _animator.SetBool("Attack", true);
             InvokeRepeating("Attack", 0f, attackRate);
         }
-        //else
-        //{
-        //    isAttacking = false;
-        //    _animator.SetBool("Attack", true);
-        //    CancelInvoke();
-        //}
     }
 
     public void Attack()
@@ -57,7 +59,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log(currentHealth);
         if (currentHealth <= 0 && !isDead) Die();
     }
 

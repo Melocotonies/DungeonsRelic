@@ -2,6 +2,8 @@
 
 public class Turret : MonoBehaviour
 {
+    public float damage { get; private set; }
+
     private Collider[] colliders;
     private float radius = 5f;
 
@@ -11,9 +13,10 @@ public class Turret : MonoBehaviour
     private void Awake()
     {
         _turretTop = GetComponentInChildren<TurretTop>();
+        damage = 2f;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         colliders = Physics.OverlapSphere(transform.position, radius, LayerMask.GetMask("Enemy"));
         if(colliders.Length > 0)

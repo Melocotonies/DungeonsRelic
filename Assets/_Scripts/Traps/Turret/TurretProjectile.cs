@@ -2,14 +2,16 @@
 
 public class TurretProjectile : MonoBehaviour
 {
-    private float damage = 1f;
     private float shootForce = 20f;
 
     private Rigidbody _rigidbody;
 
+    private Turret turret;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        turret = GetComponentInParent<Turret>();
     }
 
     private void Update()
@@ -23,7 +25,7 @@ public class TurretProjectile : MonoBehaviour
         Enemy enemy = collision.transform.GetComponent<Enemy>();
         if (enemy)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(turret.damage);
         }
     }
 }

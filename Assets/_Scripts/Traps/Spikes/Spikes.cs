@@ -1,43 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    private float damage = 1;
-    private float damageRate = 1f;
+    public float damage { get; private set; }
 
-    private bool isEnemyOnTrap;
-
-    private RaycastHit hit;
-
+    //private float damageRateTime = 3f;
+    private float damageRateTime;
+    private float maxDamageRateTime = 1f;
+    
     private Enemy enemy;
 
-    private void OnCollisionEnter(Collision collision)
+    private Vector3 halfExtents;
+    private Collider[] colliders;
+
+    private void Awake()
     {
-        enemy = collision.transform.GetComponent<Enemy>();
-        if (enemy && !isEnemyOnTrap && !enemy.isDead)
-        {
-            isEnemyOnTrap = true;
-            InvokeRepeating("DamageEnemy", 0, damageRate);
-        }
-        else
-        {
-            CancelInvoke();
-        }
+        damage = 1f;
+        Vector3 trapSize = GetComponentInChildren<Renderer>().bounds.size;
+        halfExtents = new Vector3(trapSize.x * .5f, trapSize.y, trapSize.z * .5f);
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void FixedUpdate()
     {
-        enemy = collision.transform.GetComponent<Enemy>();
-        if (enemy)
+        colliders = Physics.OverlapBox(transform.position, halfExtents, Quaternion.identity, LayerMask.GetMask("Enemy"));
+        if (colliders.Length > 0)
         {
-            CancelInvoke();
+            foreach (Collider collider in colliders)
+            {
+                Enemy enemy = collider.transform.GetComponent<Enemy>();
+                if (enemy && !enemy.isDead)
+                {
+                    damageRateTime += Time.deltaTime;
+                    if (damageRateTime > maxDamageRateTime)
+                    {
+                        damageRateTime -= maxDamageRateTime;
+                        enemy.TakeDamage(damage);
+                    }
+                }
+            }
         }
-    }
-
-    private void DamageEnemy()
-    {
-        enemy.TakeDamage(damage);
     }
 }

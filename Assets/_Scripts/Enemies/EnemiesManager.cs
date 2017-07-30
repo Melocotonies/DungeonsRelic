@@ -12,6 +12,8 @@ public class EnemiesManager : MonoBehaviour
 
     private GameObject[] enemiesPrefabs;
 
+    private Vector3 enemyPosition;
+
     private void Awake()
     {
         relic = FindObjectOfType<Relic>();
@@ -24,13 +26,11 @@ public class EnemiesManager : MonoBehaviour
         {
             GameManager.currentState = GameManager.State.FIGHTING;
             SetEnemies();
-            Debug.Log("Enemies coming! " + availableDoors.Count);
         }
 
         if(GameManager.currentState == GameManager.State.FIGHTING && transform.childCount == 0)
         {
             GameManager.currentState = GameManager.State.BUILDING;
-            Debug.Log("Building time!");
         }
     }
 
@@ -61,69 +61,78 @@ public class EnemiesManager : MonoBehaviour
                 Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
                 break;
         }
+        
+        StartCoroutine(InstantiateEnemyCoroutine());
+    }
 
-        Vector3 enemyPosition = Vector3.zero;
+    private IEnumerator InstantiateEnemyCoroutine()
+    {
         for (int i = 0; i < GameManager.numOfEnemiesInWave; i++)
         {
             GameObject newEnemy = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
-            if(GameManager.currentWave < 3)
+            SetEnemyPosition(newEnemy);
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void SetEnemyPosition(GameObject newEnemy)
+    {
+        if (GameManager.currentWave < 3)
+        {
+            enemyPosition = availableDoors[0].transform.position;
+        }
+        else if (GameManager.currentWave < 7)
+        {
+            if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
             {
                 enemyPosition = availableDoors[0].transform.position;
-            }
-            else if(GameManager.currentWave < 7)
-            {
-                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[0].transform.position;
-                    currentEnemiesInDoor[0]++;
-                }
-                else
-                {
-                    enemyPosition = availableDoors[1].transform.position;
-                }
-            }
-            else if(GameManager.currentWave < 12)
-            {
-                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[0].transform.position;
-                    currentEnemiesInDoor[0]++;
-                }
-                else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[1].transform.position;
-                    currentEnemiesInDoor[1]++;
-                }
-                else
-                {
-                    enemyPosition = availableDoors[2].transform.position;
-                }
+                currentEnemiesInDoor[0]++;
             }
             else
             {
-                if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[0].transform.position;
-                    currentEnemiesInDoor[0]++;
-                }
-                else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[1].transform.position;
-                    currentEnemiesInDoor[1]++;
-                }
-                else if (currentEnemiesInDoor[2] < GameManager.numOfEnemiesInDoor)
-                {
-                    enemyPosition = availableDoors[2].transform.position;
-                    currentEnemiesInDoor[2]++;
-                }
-                else
-                {
-                    enemyPosition = availableDoors[3].transform.position;
-                }
+                enemyPosition = availableDoors[1].transform.position;
             }
-            
-            newEnemy.transform.position = enemyPosition;            
         }
-
+        else if (GameManager.currentWave < 12)
+        {
+            if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
+            {
+                enemyPosition = availableDoors[0].transform.position;
+                currentEnemiesInDoor[0]++;
+            }
+            else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
+            {
+                enemyPosition = availableDoors[1].transform.position;
+                currentEnemiesInDoor[1]++;
+            }
+            else
+            {
+                enemyPosition = availableDoors[2].transform.position;
+            }
+        }
+        else
+        {
+            if (currentEnemiesInDoor[0] < GameManager.numOfEnemiesInDoor)
+            {
+                enemyPosition = availableDoors[0].transform.position;
+                currentEnemiesInDoor[0]++;
+            }
+            else if (currentEnemiesInDoor[1] < GameManager.numOfEnemiesInDoor)
+            {
+                enemyPosition = availableDoors[1].transform.position;
+                currentEnemiesInDoor[1]++;
+            }
+            else if (currentEnemiesInDoor[2] < GameManager.numOfEnemiesInDoor)
+            {
+                enemyPosition = availableDoors[2].transform.position;
+                currentEnemiesInDoor[2]++;
+            }
+            else
+            {
+                enemyPosition = availableDoors[3].transform.position;
+            }
+        }
+        newEnemy.transform.position = enemyPosition;
     }
 }

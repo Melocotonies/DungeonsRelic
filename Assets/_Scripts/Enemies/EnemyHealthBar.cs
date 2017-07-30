@@ -16,7 +16,7 @@ public class EnemyHealthBar : MonoBehaviour
 
     private void Update()
     {
-        health = enemy.currentHealth / enemy.maxHealth;
-        _image.fillAmount = Mathf.Clamp(health, 0f, enemy.maxHealth);
+        health = enemy.currentHealth / enemy._maxHealth;
+        _image.fillAmount = Mathf.Clamp(health, 0f, enemy._maxHealth);
     }
 }
