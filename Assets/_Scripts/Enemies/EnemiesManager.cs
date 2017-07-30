@@ -33,30 +33,29 @@ public class EnemiesManager : MonoBehaviour
 
     public void SetEnemies()
     {
-        switch (GameManager.currentWave)
+        currentEnemiesInDoor[0] = 0;
+        currentEnemiesInDoor[1] = 0;
+        currentEnemiesInDoor[2] = 0;
+
+        int currentWave = GameManager.currentWave;
+        if (currentWave == 1)
         {
-            case 1:
-                availableDoors.Add(doors[0]);
-                Debug.Log("Door 1");
-                break;
-            case 3:
-                availableDoors.Add(doors[1]);
-                GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 2;
-                Debug.Log("Door 1 & 2");
-                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
-                break;
-            case 7:
-                availableDoors.Add(doors[2]);
-                GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 3;
-                Debug.Log("Door 1 & 2 & 3");
-                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
-                break;
-            case 12:
-                availableDoors.Add(doors[3]);
-                GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
-                Debug.Log("Door 1 & 2 & 3 & 4");
-                Debug.Log("Enemies in door: " + GameManager.numOfEnemiesInDoor);
-                break;
+            availableDoors.Add(doors[0]);
+        }
+        else if (currentWave >= 3 && currentWave < 7)
+        {
+            if (currentWave == 3) availableDoors.Add(doors[1]);
+            GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 2;
+        }
+        else if (currentWave >= 7 && currentWave < 12)
+        {
+            if (currentWave == 7) availableDoors.Add(doors[2]);
+            GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 3;
+        }
+        else if (currentWave >= 12)
+        {
+            if (currentWave == 12) availableDoors.Add(doors[3]);
+            GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
         }
         
         StartCoroutine(InstantiateEnemyCoroutine());
