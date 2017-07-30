@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Texture2D cursorTexture;
+
     [SerializeField] private Text moneyText;
 
     [SerializeField] private GameObject wavePanel;
@@ -10,14 +12,19 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject messagePanel;
     [SerializeField] private Text messageText;
+    
+    [SerializeField] private Text actionText;
+    [SerializeField] private GameObject actionPanel;
 
-    [SerializeField] private GameObject readyPanel;
+    private bool isMoneyIncreased;
+
+    public static Relic relic;
 
     public enum TrapsType { SPIKES = 5, TURRET = 10 }
     public enum TrapsDamage { SPIKES = 1, TURRET = 2 }
 
     public static State currentState;
-    public enum State { TUTORIAL, BUILDING, READY, FIGHTING }
+    public enum State { TUTORIAL, BUILDING, READY, FIGHTING, LOST }
 
     public static int currentWave { get; set; }
     public static int numOfEnemiesInWave { get; set; }
@@ -26,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        relic = FindObjectOfType<Relic>();
+
         currentWave = 0;
         numOfEnemiesInWave = 3;
         numOfEnemiesInDoor = 0;
@@ -43,17 +52,20 @@ public class GameManager : MonoBehaviour
         {
             if(currentState == State.TUTORIAL)
             {
-                messageText.fontSize = 18;
-                messageText.text =  "Click on the highlighed areas to build traps." +
-                                    "Traps cost money. You can get money by completing waves " +
+                messageText.text =  "Click on the highlighed areas to build traps. \n" +
+                                    "Traps cost money. You can get money by completing waves \n" +
                                     "but this time I'm giving you some to place the first traps.";
             }
-            else
+            else if (currentState == State.BUILDING && !isMoneyIncreased)
             {
-                messageText.fontSize = 20;
-                messageText.text = "Wave completed!";
+                isMoneyIncreased = true;
+                currentMoney += (currentWave * 10);
+
+                messageText.text =  "Wave completed! \n" +
+                                    "Place some traps";
+                
             }
-            readyPanel.SetActive(true);
+            actionPanel.SetActive(true);
             messagePanel.SetActive(true);
             wavePanel.SetActive(false);            
 
@@ -66,16 +78,55 @@ public class GameManager : MonoBehaviour
         if(currentState == State.READY)
         {
             wavePanel.SetActive(true);
-            readyPanel.SetActive(false);
+            actionPanel.SetActive(false);
             messagePanel.SetActive(false);
         }
+
+        if (currentState == State.LOST)
+        {
+            Time.timeScale = 0;
+            messageText.text = "You lost. Waves completed: " + (currentWave - 1);
+
+            actionText.text = "RESTART";
+
+            actionPanel.SetActive(true);
+            messagePanel.SetActive(true);
+            wavePanel.SetActive(false);
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                actionText.text = "READY";
+                messagePanel.SetActive(false);
+                wavePanel.SetActive(false);
+
+                Enemy[] remainingEnemies = FindObjectsOfType<Enemy>();
+                foreach(Enemy enemy in remainingEnemies)
+                {
+                    Destroy(enemy.gameObject);
+                }
+
+                currentMoney = 10;
+                numOfEnemiesInWave = 3;
+                numOfEnemiesInDoor = 0;
+                currentWave = 0;
+                currentState = State.TUTORIAL;
+
+                relic.currentHealth = relic.maxHealth;
+                Time.timeScale = 1;
+            }
+        }
+    }
+
+    private void OnGUI()
+    {
+        Vector3 mPos = Input.mousePosition;
+        GUI.DrawTexture(new Rect(mPos.x - 32, Screen.height - mPos.y - 32, 16, 16), cursorTexture);
     }
 
     public static void NextWave()
     {
         currentWave++;
         numOfEnemiesInWave += currentWave;
-        currentMoney += (currentWave * 10);
         currentState = State.READY;
     }
 

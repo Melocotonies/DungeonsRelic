@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
 {
-    public Relic relic { get; private set; }
-
     [SerializeField] private GameObject[] doors;
     private List<GameObject> availableDoors = new List<GameObject>();
     private int[] currentEnemiesInDoor = new int[3];
@@ -16,7 +14,6 @@ public class EnemiesManager : MonoBehaviour
 
     private void Awake()
     {
-        relic = FindObjectOfType<Relic>();
         enemiesPrefabs = Resources.LoadAll<GameObject>("Enemies");
     }
 

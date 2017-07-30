@@ -2,7 +2,14 @@
 
 public class Spikes : MonoBehaviour
 {
-    public float damage { get; private set; }
+    [SerializeField] private float damage;
+    public float _damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
 
     //private float damageRateTime = 3f;
     private float damageRateTime;
@@ -15,7 +22,6 @@ public class Spikes : MonoBehaviour
 
     private void Awake()
     {
-        damage = 1f;
         Vector3 trapSize = GetComponentInChildren<Renderer>().bounds.size;
         halfExtents = new Vector3(trapSize.x * .5f, trapSize.y, trapSize.z * .5f);
     }
@@ -34,7 +40,7 @@ public class Spikes : MonoBehaviour
                     if (damageRateTime > maxDamageRateTime)
                     {
                         damageRateTime -= maxDamageRateTime;
-                        enemy.TakeDamage(damage);
+                        enemy.TakeDamage(_damage);
                     }
                 }
             }

@@ -25,7 +25,7 @@ public class TurretProjectile : MonoBehaviour
         Enemy enemy = collision.transform.GetComponent<Enemy>();
         if (enemy)
         {
-            enemy.TakeDamage(turret.damage);
+            enemy.TakeDamage(turret._damage);
         }
     }
 }

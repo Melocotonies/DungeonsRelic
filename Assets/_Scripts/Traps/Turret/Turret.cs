@@ -2,7 +2,14 @@
 
 public class Turret : MonoBehaviour
 {
-    public float damage { get; private set; }
+    [SerializeField] private float damage;
+    public float _damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
 
     private Collider[] colliders;
     private float radius = 5f;
@@ -13,7 +20,6 @@ public class Turret : MonoBehaviour
     private void Awake()
     {
         _turretTop = GetComponentInChildren<TurretTop>();
-        damage = 2f;
     }
 
     private void FixedUpdate()

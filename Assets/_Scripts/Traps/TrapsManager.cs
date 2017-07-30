@@ -12,6 +12,8 @@ public class TrapsManager : MonoBehaviour
     private TrapFloorTile lastTrapFloorTile;
     private int trapPrice;
 
+    private bool isTrapHighlighted;
+
     Transform _camera;
     private RaycastHit hit;
 
@@ -48,8 +50,10 @@ public class TrapsManager : MonoBehaviour
             if (lastTrapFloorTile && currentTrapFloorTile != lastTrapFloorTile)
             {
                 ChangeEmissiveColor(lastTrapFloorTile, Color.black);
+                isTrapHighlighted = false;
             }
             ChangeEmissiveColor(currentTrapFloorTile, emissiveColor);
+            isTrapHighlighted = true;
 
             //Place trap
             if (Input.GetMouseButtonDown(0))
@@ -82,6 +86,7 @@ public class TrapsManager : MonoBehaviour
         {
             ChangeEmissiveColor(currentTrapFloorTile, Color.black);
             ChangeEmissiveColor(lastTrapFloorTile, Color.black);
+            isTrapHighlighted = false;
         }
     }
 
@@ -93,6 +98,14 @@ public class TrapsManager : MonoBehaviour
         foreach (Renderer _renderer in trapFloorTileRenderers)
         {
             _renderer.material.SetColor("_EmissionColor", color);
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (isTrapHighlighted)
+        {
+
         }
     }
 
