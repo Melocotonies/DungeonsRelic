@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -100,24 +101,7 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                actionText.text = "READY";
-                messagePanel.SetActive(false);
-                wavePanel.SetActive(false);
-
-                Enemy[] remainingEnemies = FindObjectsOfType<Enemy>();
-                foreach(Enemy enemy in remainingEnemies)
-                {
-                    Destroy(enemy.gameObject);
-                }
-
-                currentMoney = 10;
-                numOfEnemiesInWave = 3;
-                numOfEnemiesInDoor = 0;
-                currentWave = 0;
-                currentState = State.TUTORIAL;
-
-                relic.currentHealth = relic.maxHealth;
-                Time.timeScale = 1;
+                SceneManager.LoadScene(0);
             }
         }
     }

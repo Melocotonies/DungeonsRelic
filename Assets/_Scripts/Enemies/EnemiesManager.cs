@@ -57,8 +57,13 @@ public class EnemiesManager : MonoBehaviour
             if (currentWave == 12) availableDoors.Add(doors[3]);
             GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
         }
-        
-        StartCoroutine(InstantiateEnemyCoroutine());
+
+        for (int i = 0; i < GameManager.numOfEnemiesInWave; i++)
+        {
+            GameObject newEnemy = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
+            SetEnemyPosition(newEnemy);
+        }
+        //StartCoroutine(InstantiateEnemyCoroutine());
     }
 
     private IEnumerator InstantiateEnemyCoroutine()
