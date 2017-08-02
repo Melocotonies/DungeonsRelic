@@ -40,9 +40,9 @@ public class GameManager : MonoBehaviour
         _trapsManager = FindObjectOfType<TrapsManager>();
 
         currentWave = 0;
-        numOfEnemiesInWave = 3;
+        numOfEnemiesInWave = 1;
         numOfEnemiesInDoor = 0;
-        currentMoney = 10;
+        currentMoney = 40;
 
         currentState = State.TUTORIAL;
     }
@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
             {
+                Time.timeScale = 1;
                 SceneManager.LoadScene(0);
             }
         }

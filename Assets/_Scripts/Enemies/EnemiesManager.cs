@@ -136,4 +136,21 @@ public class EnemiesManager : MonoBehaviour
         }
         newEnemy.transform.position = enemyPosition;
     }
+
+    private void OnGUI()
+    {
+        if(GameManager.currentState == GameManager.State.BUILDING || GameManager.currentState == GameManager.State.TUTORIAL)
+        {
+            GUIStyle textStyle = new GUIStyle();
+            textStyle.normal.textColor = Color.white;
+            textStyle.fontSize = 80;
+
+            for (int i = 0; i < availableDoors.Count; i++)
+            {
+                Vector3 doorPosition = availableDoors[i].transform.position;
+                Rect textPosition = new Rect(doorPosition.x, doorPosition.y + 2f, 1024f, 1024f);
+                GUI.Label(textPosition, "Enemies coming this way");
+            }
+        }
+    }
 }
