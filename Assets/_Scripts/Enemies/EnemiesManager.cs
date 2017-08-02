@@ -8,6 +8,8 @@ public class EnemiesManager : MonoBehaviour
     private List<GameObject> availableDoors = new List<GameObject>();
     private int[] currentEnemiesInDoor = new int[3];
 
+    private bool areDoorsUpdated;
+
     private GameObject[] enemiesPrefabs;
 
     private Vector3 enemyPosition;
@@ -19,9 +21,22 @@ public class EnemiesManager : MonoBehaviour
 
     private void Update()
     {
+        if((GameManager.currentState == GameManager.State.BUILDING || GameManager.currentState == GameManager.State.TUTORIAL) && !areDoorsUpdated)
+        {
+            areDoorsUpdated = true;
+
+            UpdateAvailableDoors();
+
+            foreach (GameObject door in availableDoors)
+            {
+                door.GetComponentInParent<Door>().ShowWaveCanvas();
+            }
+        }
+
         if (GameManager.currentState == GameManager.State.READY)
         {
             GameManager.currentState = GameManager.State.FIGHTING;
+            areDoorsUpdated = false;
             SetEnemies();
         }
 
@@ -31,49 +46,40 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
-    public void SetEnemies()
+    private void UpdateAvailableDoors()
     {
         currentEnemiesInDoor[0] = 0;
         currentEnemiesInDoor[1] = 0;
         currentEnemiesInDoor[2] = 0;
 
         int currentWave = GameManager.currentWave;
-        if (currentWave == 1)
+        if (currentWave == 0)
         {
             availableDoors.Add(doors[0]);
         }
-        else if (currentWave >= 3 && currentWave < 7)
+        else if (currentWave >= 2 && currentWave < 6)
         {
-            if (currentWave == 3) availableDoors.Add(doors[1]);
+            if (currentWave == 2) availableDoors.Add(doors[1]);
             GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 2;
         }
-        else if (currentWave >= 7 && currentWave < 12)
+        else if (currentWave >= 6 && currentWave < 11)
         {
-            if (currentWave == 7) availableDoors.Add(doors[2]);
+            if (currentWave == 6) availableDoors.Add(doors[2]);
             GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 3;
         }
-        else if (currentWave >= 12)
+        else if (currentWave >= 11)
         {
-            if (currentWave == 12) availableDoors.Add(doors[3]);
+            if (currentWave == 11) availableDoors.Add(doors[3]);
             GameManager.numOfEnemiesInDoor = GameManager.numOfEnemiesInWave / 4;
         }
-
-        for (int i = 0; i < GameManager.numOfEnemiesInWave; i++)
-        {
-            GameObject newEnemy = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
-            SetEnemyPosition(newEnemy);
-        }
-        //StartCoroutine(InstantiateEnemyCoroutine());
     }
 
-    private IEnumerator InstantiateEnemyCoroutine()
+    public void SetEnemies()
     {
         for (int i = 0; i < GameManager.numOfEnemiesInWave; i++)
         {
             GameObject newEnemy = Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
             SetEnemyPosition(newEnemy);
-
-            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -135,22 +141,5 @@ public class EnemiesManager : MonoBehaviour
             }
         }
         newEnemy.transform.position = enemyPosition;
-    }
-
-    private void OnGUI()
-    {
-        if(GameManager.currentState == GameManager.State.BUILDING || GameManager.currentState == GameManager.State.TUTORIAL)
-        {
-            GUIStyle textStyle = new GUIStyle();
-            textStyle.normal.textColor = Color.white;
-            textStyle.fontSize = 80;
-
-            for (int i = 0; i < availableDoors.Count; i++)
-            {
-                Vector3 doorPosition = availableDoors[i].transform.position;
-                Rect textPosition = new Rect(doorPosition.x, doorPosition.y + 2f, 1024f, 1024f);
-                GUI.Label(textPosition, "Enemies coming this way");
-            }
-        }
     }
 }

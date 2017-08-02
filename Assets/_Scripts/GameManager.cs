@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         currentState = State.READY;
     }
 
-    public static int getTrapPrice(TrapsType trap)
+    public static int GetTrapPrice(TrapsType trap)
     {
         return (int)trap;
     }

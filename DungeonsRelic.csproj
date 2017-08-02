@@ -84,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_Scripts\Door.cs" />
     <Compile Include="Assets\_Scripts\Enemies\EnemiesManager.cs" />
     <Compile Include="Assets\_Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\_Scripts\Enemies\EnemyHealthBar.cs" />

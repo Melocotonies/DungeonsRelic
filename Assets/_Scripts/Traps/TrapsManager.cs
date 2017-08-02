@@ -57,11 +57,11 @@ public class TrapsManager : MonoBehaviour
             {
                 case TypeOfTrap.SPIKES:
                     trapToInstantiate = spikesTrapPrefab;
-                    trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.SPIKES);
+                    trapPrice = GameManager.GetTrapPrice(GameManager.TrapsType.SPIKES);
                     break;
                 case TypeOfTrap.TURRET:
                     trapToInstantiate = turretTrapPrefab;
-                    trapPrice = GameManager.getTrapPrice(GameManager.TrapsType.TURRET);
+                    trapPrice = GameManager.GetTrapPrice(GameManager.TrapsType.TURRET);
                     break;
             }
 
