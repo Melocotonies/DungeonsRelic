@@ -34,6 +34,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (isDead)
+        {
+            _agent.isStopped = true;
+            return;
+        }
+
         Vector3 target = GameManager.relic.transform.position;
         transform.LookAt(GameManager.relic.transform.position);
         _agent.SetDestination(target);
@@ -60,13 +66,21 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         currentHealth -= damage;
-        if (currentHealth <= 0 && !isDead) Die();
+        if (currentHealth <= 0) Die();
     }
 
     private void Die()
     {
         isDead = true;
+        _animator.SetBool("Dead", true);
+        Invoke("DestroyEnemy", 3f);
+    }
+
+    private void DestroyEnemy()
+    {
         Destroy(this.gameObject);
     }
 }
